@@ -22,7 +22,7 @@ export class FindProductsCommand extends CommandRunner {
     if (options?.name !== undefined && options?.name !== null) {
       this.runWithName(passedParam, options.name);
     } else {
-      this.runWithNone(passedParam);
+      this.runWithNone();
     }
   }
 
@@ -35,12 +35,10 @@ export class FindProductsCommand extends CommandRunner {
   }
 
   runWithName(_param: string[], name: string): void {
-    // console.log({ param, name });
     this.findProductsService.getProducts(name);
   }
 
-  runWithNone(param: string[]): void {
-    console.log({ param });
+  runWithNone(): void {
     throw new Error(
       'No product name (search string) was provided as a program argument! Arborting...\n',
     );

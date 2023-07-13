@@ -24,15 +24,3 @@ export interface Variant {
   title: string;
   price: string;
 }
-
-// export interface ProductVariantEdge {
-//   cursor: string;
-//   node: ProductVariant;
-// }
-
-// export interface ProductVariant {
-//   defaultCursor: string;
-//   id: string;
-//   title: string;
-//   price: string;
-// }

@@ -36,7 +36,7 @@ $ npm install
 
 ## Running the app
 
-specific for this assignment:
+specific for this example:
 
 ```bash
 # run without explicit build step
