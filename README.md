@@ -38,6 +38,15 @@ $ npm install
 
 ### specific for this example:
 
+Make sure to first rename `.env.example` to `.env`, and update the values, accordingly. The defaults that need to be updated are as follow:
+
+```bash
+ADMIN_API_TOKEN=shpat_xxxxxx
+SHOP_DOMAIN=my-store-123.myshopify.com
+```
+
+Then you should be able to successfully run the command (assuming token has sufficient [Shopify Admin API privileges](https://shopify.dev/docs/apps/auth/admin-app-access-tokens#changing-api-scopes), such as `read_products`).
+
 ```bash
 # run without explicit build step
 $ nest start -- findproducts -name glove
