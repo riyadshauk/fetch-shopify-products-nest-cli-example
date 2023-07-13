@@ -11,29 +11,32 @@ export class FindProductsService {
     const productVariantsFlattened = [];
     while (nextCursor || firstQuery) {
       const results = await this.shopifyAdminService.query(`{
-          products(first: 10, query: "title:*${searchString}*", after: ${
+          products(first: 10, query: "title:${
+            // this enables us to pass in an empty string to search for all products (via findproducts.command)
+            searchString !== '' ? '*' : ''
+          }${searchString}*", after: ${
         nextCursor === null ? null : `"${nextCursor}"`
       }) {
-            edges {
-              cursor
-              node {
-                defaultCursor
-                id
-                title
-                handle
-                variants(first: 20) {
-                    edges {
-                        node {
-                            id
-                            title
-                            price
-                        }
-                    }
-                }
+          edges {
+            cursor
+            node {
+              defaultCursor
+              id
+              title
+              handle
+              variants(first: 20) {
+                  edges {
+                      node {
+                          id
+                          title
+                          price
+                      }
+                  }
               }
             }
           }
-        }`);
+        }
+      }`);
       const productEdges: ProductEdge[] = results.data.data.products.edges;
       nextCursor =
         productEdges.length > 0
@@ -61,14 +64,14 @@ export class FindProductsService {
         }, []),
       );
 
-      /**
-       * @todo simplification for rate-limit throttling,
-       * otherwise exponential backoff may be used here
-       * (this is a bit slow, but ensures correct answer, for simplicity)
-       */
-      if (nextCursor) {
-        await new Promise<void>((resolve) => setTimeout(() => resolve(), 1000));
-      }
+      // /**
+      //  * @todo simplification for rate-limit throttling,
+      //  * otherwise exponential backoff may be used here
+      //  * (this is a bit slow, but ensures correct answer, for simplicity)
+      //  */
+      // if (nextCursor) {
+      //   await new Promise<void>((resolve) => setTimeout(() => resolve(), 1000));
+      // }
       firstQuery = false;
     }
 

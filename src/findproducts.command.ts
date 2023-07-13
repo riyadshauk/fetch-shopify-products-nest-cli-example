@@ -3,6 +3,7 @@ import { FindProductsService } from './findproducts.service';
 
 interface FindProductsCommandOptions {
   name?: string;
+  all?: boolean;
 }
 
 @Command({
@@ -21,6 +22,8 @@ export class FindProductsCommand extends CommandRunner {
   ): Promise<void> {
     if (options?.name !== undefined && options?.name !== null) {
       this.runWithName(passedParam, options.name);
+    } else if (options?.all !== undefined && options?.all) {
+      this.runWithName(passedParam, '');
     } else {
       this.runWithNone();
     }
@@ -28,10 +31,18 @@ export class FindProductsCommand extends CommandRunner {
 
   @Option({
     flags: '-name, --name [string]',
-    description: 'the input product name to search for',
+    description: 'the input product name substring to search for',
   })
-  parseString(val: string): string {
+  parseName(val: string): string {
     return val;
+  }
+
+  @Option({
+    flags: '-all, --all',
+    description: 'a boolean flag, if you want to retrieve all products',
+  })
+  parseAll(): boolean {
+    return true;
   }
 
   runWithName(_param: string[], name: string): void {

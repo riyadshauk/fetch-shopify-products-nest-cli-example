@@ -36,7 +36,7 @@ $ npm install
 
 ## Running the app
 
-specific for this example:
+### specific for this example:
 
 ```bash
 # run without explicit build step
@@ -47,7 +47,22 @@ $ npm run build
 $ node ./dist/main.js findproducts -name glove
 ```
 
-default commands:
+#### example usage
+
+```bash
+$ nest start -- findproducts -h
+Usage: main findproducts [options]
+
+A command for finding product variants by provided name substring, sorted by
+price.
+
+Options:
+  -name, --name [string]  the input product name substring to search for
+  -all, --all             a boolean flag, if you want to retrieve all products
+  -h, --help              display help for command
+```
+
+### default commands:
 
 ```bash
 # development
