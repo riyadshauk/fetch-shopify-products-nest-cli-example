@@ -11,6 +11,12 @@ export class ShopifyAdminService {
     this.#adminApiToken = this.configService.get<string>('ADMIN_API_TOKEN');
     this.#shopDomain = this.configService.get<string>('SHOP_DOMAIN');
   }
+  /**
+   * @description Attempts Graphql query against Shopify Admin Graphql API.
+   * Uses exponential backoff to retry in case of errors.
+   * @param graphql the query string (wrapped in { brackets }),
+   * without outer-wrapped { query: ... }.
+   */
   async query(graphql: string): Promise<AxiosResponse> {
     let results: AxiosResponse;
     const numOfAttempts = 9;

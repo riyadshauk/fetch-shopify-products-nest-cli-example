@@ -10,6 +10,7 @@ export class FindProductsService {
     let firstQuery = true;
     const productVariantsFlattened = [];
     while (nextCursor || firstQuery) {
+      firstQuery = false;
       const results = await this.shopifyAdminService.query(`{
           products(first: 10, query: "title:${
             // this enables us to pass in an empty string to search for all products (via findproducts.command)
@@ -63,16 +64,6 @@ export class FindProductsService {
           }
         }, []),
       );
-
-      // /**
-      //  * @todo simplification for rate-limit throttling,
-      //  * otherwise exponential backoff may be used here
-      //  * (this is a bit slow, but ensures correct answer, for simplicity)
-      //  */
-      // if (nextCursor) {
-      //   await new Promise<void>((resolve) => setTimeout(() => resolve(), 1000));
-      // }
-      firstQuery = false;
     }
 
     productVariantsFlattened.sort((a, b) => Number(a.price) - Number(b.price));
